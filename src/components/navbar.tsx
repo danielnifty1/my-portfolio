@@ -20,10 +20,13 @@ export function Navbar() {
   const [mounted, setMounted] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
-  const baseUrl = window.location.origin;
+  
+  const [baseUrl, setBaseUrl] = useState("");
+ 
 
   useEffect(() => {
     setMounted(true)
+    setBaseUrl(window.location.origin)
   }, [])
 
   const scrollToSection = (href: string) => {
@@ -42,7 +45,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href={baseUrl} className='text-xl font-bold text-accent-600'>Portfolio</Link>
+            <Link href={baseUrl?baseUrl:''} className='text-xl font-bold text-accent-600'>Portfolio</Link>
              
           </div>
 

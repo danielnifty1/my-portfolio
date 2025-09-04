@@ -40,6 +40,7 @@ export default function DashboardPage() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const queryClient = useQueryClient();
+  const [imgSrc, setImgSrc] = useState<string | null>(null);
   // Fetch profile data with better caching
   const {
     data: userprofile,
@@ -55,23 +56,33 @@ export default function DashboardPage() {
 
   // Fetch profile picture data with better caching
 
-  const {data:profilePicture
-  }=useQuery({
-    queryKey:["profilePicture"],
-      queryFn: profileService.getProfilePicture,
+  const { data: profilePicture } = useQuery({
+    queryKey: ["profilePicture"],
+    queryFn: profileService.getProfilePicture,
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
     retry: 2,
-  })
-  
-if(profilePicture){
-localStorage.setItem("profilePicture", profilePicture?.url);
+  });
 
-}
+  // if (profilePicture) {
+  //   localStorage.setItem("profilePicture", profilePicture?.url);
+  // }
+
+  // localStorage.setItem("userProfile", JSON.stringify(myProfile));
 
 
-  localStorage.setItem("userProfile", JSON.stringify(myProfile));
-  
+  useEffect(() => {
+    if (profilePicture) {
+      localStorage.setItem("profilePicture", profilePicture.url);
+    }
+
+    localStorage.setItem("userProfile", JSON.stringify(myProfile));
+  }, [profilePicture, myProfile]); // runs again when these change
+
+
+
+
+
 
   // Update profile mutation
   const updateProfileMutation = useMutation({
@@ -117,30 +128,28 @@ localStorage.setItem("profilePicture", profilePicture?.url);
     let imageUrl = "";
 
     if (file) {
-          toast.info("Uploading")
+      toast.info("Uploading");
 
       const uploaded = await uploadToCloudinary(file, "ProfilePicture");
       imageUrl = uploaded.secure_url;
       if (uploaded) {
         try {
-        toast.info("updating Profile")
-        const storepic=await profileService.createProfilePicture(imageUrl)
-        localStorage.setItem("profilePicture", storepic?.url);
+          toast.info("updating Profile");
+          const storepic = await profileService.createProfilePicture(imageUrl);
+          localStorage.setItem("profilePicture", storepic?.url);
 
-          setImgSrc(storepic.url)
-          toast.success("Profile picture updated successfully")
+          setImgSrc(storepic.url);
+          toast.success("Profile picture updated successfully");
 
           // console.log("ok last ",storepic?.url)
-          
         } catch (error) {
-          toast.error("failed to upload")
+          toast.error("failed to upload");
         }
-    
-      //  const userDocRef = doc(db, "profiles", user.uid);
-      // await updateDoc(userDocRef, { profilePhoto: imageUrl });
+
+        //  const userDocRef = doc(db, "profiles", user.uid);
+        // await updateDoc(userDocRef, { profilePhoto: imageUrl });
       }
     }
-
   };
 
   // Update form data when profile is loaded
@@ -203,11 +212,35 @@ localStorage.setItem("profilePicture", profilePicture?.url);
     }
   };
 
-const Profilepic = localStorage.getItem("profilePicture");
- const [imgSrc, setImgSrc] = useState(Profilepic);
+  // const Profilepic = localStorage.getItem("profilePicture");
+  //  const [imgSrc, setImgSrc] = useState(Profilepic);
 
+   useEffect(() => {
+    if (profilePicture && profilePicture.url) {
+      localStorage.setItem("profilePicture", profilePicture.url);
+      setImgSrc(profilePicture.url);
+    }
+  }, [profilePicture]);
 
-// console.log("new Profilepiczz ",Profilepic)
+  useEffect(() => {
+    if (myProfile) {
+      localStorage.setItem("userProfile", JSON.stringify(myProfile));
+    }
+  }, [myProfile]);
+
+  // Load saved picture into state on client
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedPic = localStorage.getItem("profilePicture");
+      if (savedPic) {
+        setImgSrc(savedPic);
+      }
+    }
+  }, []);
+
+ 
+
+  // console.log("new Profilepiczz ",Profilepic)
   if (isLoading) {
     return (
       <ProtectedRoute>
@@ -252,23 +285,21 @@ const Profilepic = localStorage.getItem("profilePicture");
           </div>
           <div className="relative w-36 h-36 rounded-full bg-gradient-to-br from-accent-400 to-accent-600 p-1 mb-8">
             <Image
-             loading="lazy" 
-            id="pic"
-              src={imgSrc?imgSrc:''}
+              loading="lazy"
+              id="pic"
+              src={imgSrc ? imgSrc : ""}
               alt="Profile picture"
               width={144}
               height={144}
               className="rounded-full w-full h-full object-cover"
             />
-            
 
             {/* Edit button */}
             <button
-            
               className="absolute inset-0 flex items-center justify-center bg-black/50 text-white rounded-full opacity-0 hover:opacity-100 transition"
               onClick={handleEditClick}
             >
-             <span className="fa fa-spin spinner"></span> ✎
+              <span className="fa fa-spin spinner"></span> ✎
             </button>
           </div>
 
