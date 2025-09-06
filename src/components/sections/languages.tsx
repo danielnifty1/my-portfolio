@@ -30,6 +30,7 @@ export function Languages() {
   const backendLanguages = languages.filter(lang => lang.category === 'backend')
   const databaseLanguages = languages.filter(lang => lang.category === 'database')
   const otherLanguages = languages.filter(lang => lang.category === 'other')
+  
 
   const renderLanguageCard = (language: Language) => (
     <div key={language.name} className="card p-6 hover:scale-105 transition-transform duration-200">

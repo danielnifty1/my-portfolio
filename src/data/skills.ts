@@ -11,7 +11,7 @@ export const skills: Skill[] = [
   { name: 'React', category: 'technical', level: 'expert', description: 'Hooks, Context, Performance optimization' },
   { name: 'Next.js', category: 'technical', level: 'advanced', description: 'App Router, SSR, API routes' },
   { name: 'Node.js', category: 'technical', level: 'advanced', description: 'Express, REST APIs, Authentication' },
-  { name: 'Python', category: 'technical', level: 'intermediate', description: 'Data analysis, automation scripts' },
+  { name: 'Php', category: 'technical', level: 'intermediate', description: 'Server-side scripting,Data analysis, automation, web scraping,RESTful APIs' },
   { name: 'SQL', category: 'technical', level: 'intermediate', description: 'PostgreSQL, MySQL, Database design' },
   { name: 'Git', category: 'technical', level: 'advanced', description: 'Version control, CI/CD workflows' },
   { name: 'Docker', category: 'technical', level: 'intermediate', description: 'Containerization, deployment' },

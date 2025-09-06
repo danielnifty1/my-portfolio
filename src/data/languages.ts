@@ -10,44 +10,58 @@ export const languages: Language[] = [
   {
     name: 'JavaScript',
     icon: '⚡',
-    proficiency: 95,
+    proficiency: 100,
     category: 'frontend',
     description: 'ES6+, Modern JavaScript features'
   },
   {
     name: 'TypeScript',
     icon: '🔷',
-    proficiency: 90,
+    proficiency: 100,
     category: 'frontend',
     description: 'Type safety, Interfaces, Generics'
   },
   {
     name: 'HTML/CSS',
     icon: '🌐',
-    proficiency: 85,
+    proficiency: 100,
     category: 'frontend',
     description: 'Semantic HTML, CSS Grid, Flexbox'
   },
   {
-    name: 'Python',
-    icon: '🐍',
-    proficiency: 75,
+  name: 'Vue.js',
+  icon: '🖖',
+  proficiency: 90,
+  category: 'frontend',
+  description: 'Reactive data binding, component-based architecture, Composition API'
+},
+  {
+    name: 'Php',
+    icon: '🐘',
+    proficiency: 90,
     category: 'backend',
-    description: 'Data analysis, automation, web scraping'
+    description: 'Server-side scripting,Data analysis, automation, web scraping,RESTful APIs'
   },
   {
     name: 'SQL',
     icon: '🗄️',
-    proficiency: 80,
+    proficiency: 100,
     category: 'database',
     description: 'PostgreSQL, MySQL, Database design'
+  },
+    {
+    name: 'No-SQL',
+    icon: '🗄️',
+    proficiency: 100,
+    category: 'database',
+    description: 'Mongoose,Database design'
   },
   {
     name: 'Node.js',
     icon: '🟢',
-    proficiency: 85,
+    proficiency: 100,
     category: 'backend',
-    description: 'Express.js, REST APIs, Authentication'
+    description: 'nest.js, REST APIs, Authentication,Graphql,scalable app, Micro Services,real-time applications,WebSockets'
   },
   {
     name: 'React',
@@ -59,7 +73,7 @@ export const languages: Language[] = [
   {
     name: 'Next.js',
     icon: '▲',
-    proficiency: 85,
+    proficiency: 90,
     category: 'frontend',
     description: 'App Router, SSR, API routes'
   },
