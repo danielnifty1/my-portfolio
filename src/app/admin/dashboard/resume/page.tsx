@@ -205,7 +205,7 @@ console.log("resume name ", resume?.fileName)
               <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div className="flex flex-col items-center">
-                    
+                    {fetchedResume&&(
                        <Link
                       href={fetchedResume.fileUrl?fetchedResume?.fileUrl:''}
                       target="_blank"
@@ -214,6 +214,9 @@ console.log("resume name ", resume?.fileName)
                       <Link2 className="text-blue-700" />
                       {fetchedResume.fileName?fetchedResume?.fileName:""}
                     </Link>
+
+                    )}
+                      
                   
                    
                   </div>
