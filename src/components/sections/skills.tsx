@@ -127,7 +127,7 @@ export function Skills() {
             </h3>
             <p className="text-primary-600 dark:text-primary-400 max-w-2xl mx-auto">
               I'm constantly expanding my skill set and staying up-to-date with the latest technologies. 
-              Currently exploring AI/ML, cloud architecture, and advanced React patterns.
+              Currently exploring AI/ML, cloud architecture, Rust Programming Language and advanced React patterns.
             </p>
           </div>
         </div>

@@ -63,7 +63,7 @@ export const plannedProjects: Project[] = [
     id: '5',
     title: 'AI Chat Application',
     description: 'A conversational AI application with natural language processing and machine learning capabilities.',
-    techStack: ['Next.js', 'Python', 'OpenAI API', 'FastAPI', 'PostgreSQL', 'Redis'],
+    techStack: ['Next.js', 'Php', 'OpenAI API', 'FastAPI', 'PostgreSQL', 'Redis'],
     status: 'planned',
     category: 'web',
     priority: 'high'
@@ -90,7 +90,7 @@ export const plannedProjects: Project[] = [
     id: '8',
     title: 'Data Visualization Tool',
     description: 'An interactive data visualization platform for creating charts, graphs, and dashboards.',
-    techStack: ['Vue.js', 'D3.js', 'Python', 'Pandas', 'FastAPI', 'PostgreSQL'],
+    techStack: ['Vue.js', 'D3.js', 'Php', 'Pandas', 'FastAPI', 'PostgreSQL'],
     status: 'planned',
     category: 'tool',
     priority: 'low'

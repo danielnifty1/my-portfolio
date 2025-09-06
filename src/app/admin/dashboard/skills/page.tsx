@@ -246,7 +246,7 @@ export default function SkillsPage() {
                     label="Skill Name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
-                    placeholder="e.g., React, Python, AWS"
+                    placeholder="e.g., React, Php, AWS"
                     error={errors.name}
                     required
                   />

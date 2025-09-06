@@ -14,7 +14,7 @@ import { LinkPreview } from "@dhaiwat10/react-link-preview";
 
 const TECHNOLOGY_OPTIONS = [
   'React', 'Next.js', 'TypeScript', 'JavaScript', 'Node.js', 'Express',
-  'Python', 'Django', 'Flask', 'Java', 'Spring Boot', 'C#', '.NET',
+  'Php', 'Django', 'Flask', 'Java', 'Spring Boot', 'C#', '.NET',
   'HTML', 'CSS', 'Tailwind CSS', 'SASS', 'Bootstrap',
   'MongoDB', 'PostgreSQL', 'MySQL', 'Firebase', 'Supabase',
   'AWS', 'Vercel', 'Netlify', 'Docker', 'Kubernetes',

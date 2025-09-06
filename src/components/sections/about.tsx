@@ -95,7 +95,7 @@ export function About() {
                 <div className="flex items-center space-x-3">
                   <div className="w-3 h-3 bg-accent-600 rounded-full"></div>
                   <span className="text-primary-700 dark:text-primary-200 font-medium">
-                    50+ Projects Completed
+                    10+ Projects Completed
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -104,12 +104,12 @@ export function About() {
                     Full-Stack Development
                   </span>
                 </div>
-                <div className="flex items-center space-x-3">
+                {/* <div className="flex items-center space-x-3">
                   <div className="w-3 h-3 bg-accent-600 rounded-full"></div>
                   <span className="text-primary-700 dark:text-primary-200 font-medium">
                     UI/UX Design
                   </span>
-                </div>
+                </div> */}
               </div>
 
               {/* Action Buttons */}

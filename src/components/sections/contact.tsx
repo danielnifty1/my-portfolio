@@ -17,10 +17,10 @@ interface FormErrors {
 }
 
 const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/yourusername', icon: Github, color: 'hover:text-gray-900 dark:hover:text-gray-100' },
-  { name: 'LinkedIn', href: 'https://linkedin.com/in/yourusername', icon: Linkedin, color: 'hover:text-blue-600 dark:hover:text-blue-400' },
-  { name: 'Twitter', href: 'https://twitter.com/yourusername', icon: Twitter, color: 'hover:text-blue-400 dark:hover:text-blue-300' },
-  { name: 'Email', href: 'mailto:your.email@example.com', icon: Mail, color: 'hover:text-red-600 dark:hover:text-red-400' },
+  { name: 'GitHub', href: 'https://github.com/danielnifty1', icon: Github, color: 'hover:text-gray-900 dark:hover:text-gray-100' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/daniel-chigozie', icon: Linkedin, color: 'hover:text-blue-600 dark:hover:text-blue-400' },
+  { name: 'Twitter', href: 'https://x.com/danielnifty', icon: Twitter, color: 'hover:text-blue-400 dark:hover:text-blue-300' },
+  { name: 'Email', href: 'mailto:danielobichere@gmail.com', icon: Mail, color: 'hover:text-red-600 dark:hover:text-red-400' },
 ]
 
 export function Contact() {
