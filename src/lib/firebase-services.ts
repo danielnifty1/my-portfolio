@@ -249,6 +249,7 @@ export const aboutService = {
         updatedAt: serverTimestamp(),
       };
       
+      
       // Merge to create if missing
       await setDoc(aboutRef, updateData, { merge: true });
       
