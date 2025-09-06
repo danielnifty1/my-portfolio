@@ -29,10 +29,17 @@ export interface Profile {
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }
-
+// Resume
+export interface MyResume {
+  id: string;
+  resume: string;
+  fileName:string;
+  updatedAt: Timestamp;
+}
 export interface AboutMe {
   id: string;
   biography: string;
+  intro:string;
   updatedAt: Timestamp;
 }
 
@@ -233,11 +240,12 @@ export const aboutService = {
     }
   },
 
-  async updateAbout(biography: string): Promise<AboutMe> {
+  async updateAbout(biography: string,intro:string): Promise<AboutMe> {
     try {
       const aboutRef = doc(db, 'about', 'main');
       const updateData = {
         biography,
+        intro,
         updatedAt: serverTimestamp(),
       };
       
@@ -256,11 +264,12 @@ export const aboutService = {
     }
   },
 
-  async createAbout(biography: string): Promise<AboutMe> {
+  async createAbout(biography: string,intro:string): Promise<AboutMe> {
     try {
       const aboutRef = doc(db, 'about', 'main');
       const aboutData = {
         biography,
+        intro,
         updatedAt: serverTimestamp(),
       };
       
@@ -484,3 +493,57 @@ export const storageService = {
     }
   }
 };
+
+// Resume
+export const myResumes={
+// get Resume
+
+async getResume(): Promise<MyResume | null> {
+    try {
+      const resumeRef = doc(db, 'myResume', 'main');
+      const resumeSnap = await getDoc(resumeRef);
+      
+      if (resumeSnap.exists()) {
+        return { id: resumeSnap.id, ...resumeSnap.data() } as MyResume;
+      }
+      return null;
+    } catch (error) {
+      // Fallback to cache when offline
+      try {
+        const resumeRef = doc(db, 'myResume', 'main');
+        const cachedSnap = await getDocFromCache(resumeRef);
+        if (cachedSnap.exists()) {
+          return { id: cachedSnap.id, ...cachedSnap.data() } as MyResume;
+        }
+      } catch (_) {}
+      console.error('Error getting Resume:', error);
+      throw error;
+    }
+  },
+
+  // update or create resume
+   async updateResume(resume: string,fileName:string): Promise<MyResume> {
+    try {
+      const myResume = doc(db, 'myResume', 'main');
+      const updateData = {
+        resume,
+        fileName,
+        updatedAt: serverTimestamp(),
+      };
+      
+      // Merge to create if missing
+      await setDoc(myResume, updateData, { merge: true });
+      
+      const updatedResume = await this.getResume();
+      if (!updatedResume) {
+        throw new Error('About not found after update');
+      }
+      
+      return updatedResume;
+    } catch (error) {
+      console.error('Error updating about:', error);
+      throw error;
+    }
+  },
+
+}

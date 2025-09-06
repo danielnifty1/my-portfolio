@@ -1,33 +1,39 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { aboutService, AboutMe } from '@/lib/firebase-services';
+import {useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { aboutService } from '@/lib/firebase-services';
 import { Textarea, Button } from '@/components/admin/ui/form-components';
 import { FileText, Save } from 'lucide-react';
 import DashboardLayout from '@/components/admin/layout/dashboard-layout';
 import ProtectedRoute from '@/components/admin/auth/protected-route';
 import { AboutSkeleton } from '@/components/admin/ui/skeleton';
 import { toast } from 'react-toastify';
+import { useProjectsService } from '@/hooks/useOwnerProfile';
+ 
 
 export default function AboutPage() {
   const [biography, setBiography] = useState('');
+  const [intro, setIntro] = useState('');
+
   const [errors, setErrors] = useState<Record<string, string>>({});
   
   const queryClient = useQueryClient();
 
   // Fetch about data with better caching
-  const { data: aboutData, isLoading, error } = useQuery({
-    queryKey: ['about'],
-    queryFn: aboutService.getAbout,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
-    retry: 2,
-  });
+  const { data: aboutData, isLoading, error } =useProjectsService()
   
+  //  useQuery({
+  //   queryKey: ["about"],
+  //   queryFn: aboutService.getAbout,
+  //   staleTime: 5 * 60 * 1000, // 5 minutes
+  //   gcTime: 10 * 60 * 1000, // 10 minutes
+  //   retry: 2,
+  // });
+
   // Update about mutation
   const updateAboutMutation = useMutation({
-    mutationFn: (biography: string) => aboutService.updateAbout(biography),
+    mutationFn: (biography: string) => aboutService.updateAbout(biography,intro),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['about'] });
       setErrors({});
@@ -42,7 +48,7 @@ export default function AboutPage() {
 
   // Create about mutation (for first time setup)
   const createAboutMutation = useMutation({
-    mutationFn: (biography: string) => aboutService.createAbout(biography),
+    mutationFn: (biography: string) => aboutService.createAbout(biography,intro),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['about'] });
       setErrors({});
@@ -59,11 +65,20 @@ export default function AboutPage() {
   useEffect(() => {
     if (aboutData) {
       setBiography(aboutData.biography || '');
+      setIntro(aboutData.intro)
     }
   }, [aboutData]);
-
+ 
   const handleBiographyChange = (value: string) => {
     setBiography(value);
+    // Clear error when user starts typing
+    if (errors.biography) {
+      setErrors(prev => ({ ...prev, biography: '' }));
+    }
+  };
+
+    const handleIntoChange = (value: string) => {
+    setIntro(value);
     // Clear error when user starts typing
     if (errors.biography) {
       setErrors(prev => ({ ...prev, biography: '' }));
@@ -76,6 +91,11 @@ export default function AboutPage() {
     // Validation
     if (!biography.trim()) {
       setErrors({ biography: 'Please enter your biography.' });
+      return;
+    }
+
+     if (!intro.trim()) {
+      setErrors({ biography: 'Please enter your Intro.' });
       return;
     }
 
@@ -133,8 +153,23 @@ export default function AboutPage() {
               <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-6">
                 Professional Biography
               </h2>
+
+              <Textarea
+            
+
+              
+                label="My Intro"
+                value={intro}
+                onChange={(e) => handleIntoChange(e.target.value)}
+                placeholder="Tell your story... Share your professional journey, skills, passions, and what makes you unique. This will be displayed on your portfolio's about section."
+                error={errors.biography}
+                rows={6}
+                required
+                className='mb-[20px] p-5'
+               />
               
               <Textarea
+              className='p-5'
                 label="About Me"
                 value={biography}
                 onChange={(e) => handleBiographyChange(e.target.value)}
@@ -171,3 +206,5 @@ export default function AboutPage() {
     </ProtectedRoute>
   );
 }
+
+

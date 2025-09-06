@@ -15,6 +15,7 @@ import {
   Sun,
   Moon,
   Home,
+  FileArchive,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -35,6 +36,8 @@ const sidebarItems: SidebarItem[] = [
   { name: "About Me", href: "/admin/dashboard/about", icon: FileText },
   { name: "Projects", href: "/admin/dashboard/projects", icon: Briefcase },
   { name: "Skills", href: "/admin/dashboard/skills", icon: Code },
+  { name: "Resume", href: "/admin/dashboard/resume", icon: FileArchive },
+
 ];
 
 export default function DashboardLayout({
