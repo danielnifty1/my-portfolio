@@ -71,6 +71,7 @@ export function About() {
                 </div>
               </div>
             </div>
+            
 
             {/* Content */}
             <div className="order-1 lg:order-2 space-y-6">
