@@ -65,13 +65,14 @@ export function About() {
                     height={320}
                     className="rounded-2xl"
                   />
+                  
                 </div>
                 <div className=" absolute -bottom-4 -right-4 w-24 h-24 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center shadow-lg">
                   <span className="text-2xl">🚀</span>
                 </div>
               </div>
             </div>
-            
+
 
             {/* Content */}
             <div className="order-1 lg:order-2 space-y-6">
