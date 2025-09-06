@@ -22,11 +22,14 @@ export default function ResumePage() {
 //   const [imgPdf, setPdfSrc] = useState<string | null>(null);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [fetchedResume, setfetchedResume] = useState<any>(null);
+  const [fetchedResume, setfetchedResume] = useState({
+    fileName:"",
+    fileUrl:''
+  });
 
 
   // Fetch skills data with better caching
-  const { data: resume, isLoading, error: err } = useGetResume();
+  const { data: resume, isLoading, error } = useGetResume();
 console.log("resume name ", resume?.fileName)
 
 
@@ -35,7 +38,9 @@ console.log("resume name ", resume?.fileName)
       if (resume) {
       localStorage.setItem("fetchResumePicture", JSON.stringify(resume));
 
-            // setfetchedResume(storedResume);
+            setfetchedResume({
+              fileName:resume.fileName,
+            fileUrl:resume.resume});
        
       }
     }
@@ -76,7 +81,10 @@ console.log("resume name ", resume?.fileName)
             localStorage.setItem("fetchResumePicture", JSON.stringify(storedResume));
       }
             // console.log("storedResume",storedResume)
-            setfetchedResume(storedResume);
+            setfetchedResume({
+              fileName:storedResume.fileName,
+              fileUrl:storedResume.resume
+            });
             // setUploadedResume(storepic.fileName)
             toast.success("Resume updated successfully");
 
@@ -114,7 +122,7 @@ console.log("resume name ", resume?.fileName)
     );
   }
 
-  if (err?.message) {
+  if (error) {
     return (
       <DashboardLayout>
         <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4">
@@ -154,10 +162,10 @@ console.log("resume name ", resume?.fileName)
           {/* Skill Form */}
           {showForm && (
             <div className="mb-8 bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-              {err?.message && (
+              {error && (
                 <div className="mb-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4">
                   <p className="text-red-600 dark:text-red-400">
-                    {err.message}
+                    {error}
                   </p>
                 </div>
               )}
@@ -197,14 +205,17 @@ console.log("resume name ", resume?.fileName)
               <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div className="flex flex-col items-center">
-                    <Link
-                      href={fetchedResume.resume}
+                    
+                       <Link
+                      href={fetchedResume.fileUrl?fetchedResume?.fileUrl:''}
                       target="_blank"
                       className="flex gap-2 overflow-hidden w-40"
                     >
                       <Link2 className="text-blue-700" />
-                      {fetchedResume.fileName}
+                      {fetchedResume.fileName?fetchedResume?.fileName:""}
                     </Link>
+                  
+                   
                   </div>
                 </div>
               </div>
