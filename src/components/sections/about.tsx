@@ -59,7 +59,7 @@ export function About() {
               <div className="relative">
                 <div className="w-80 h-80 mx-auto rounded-2xl bg-gradient-to-br from-accent-400 to-accent-600 flex items-center justify-center text-white text-8xl font-bold shadow-2xl">
                   <Image
-                    src={profilePicture?.url ? profilePicture?.url : ""}
+                    src="/images/avatar.png"
                     alt="Profile"
                     width={320}
                     height={320}
