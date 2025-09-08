@@ -33,6 +33,7 @@ export function Contact() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const[isSuccessfull,setIsSuccessfull]=useState(false)
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {}
@@ -67,16 +68,47 @@ export function Contact() {
     setIsSubmitting(true)
     
     // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    
-    // Reset form after successful submission
-    setTimeout(() => {
-      setIsSubmitted(false)
+
+    try {
+      
+     const res = await fetch("/api/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        to: formData.email,
+        subject:"Thank you",
+        template: "thankyou",   // this matches welcome.handlebars
+        message: formData.message,
+        sender:formData.name
+      }),
+    });
+
+    const data = await res.json();
+    //  console.log(data)
+    if(data.success){
+      setIsSuccessfull(true)
+          setIsSubmitting(false)
+        setTimeout(() => {
+      setIsSubmitted(true)
       setFormData({ name: '', email: '', message: '' })
     }, 3000)
+    }
+    
+    // setIsSubmitted(true)
+          setIsSubmitting(false)
+   
+    // alert(data.message);
+
+    } catch (error) {
+      throw Error("Failed to send mail")
+    }
+
+    // await new Promise(resolve => setTimeout(resolve, 1000))
+    
+
+    
+    // Reset form after successful submission
+  
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -89,7 +121,7 @@ export function Contact() {
     }
   }
 
-  if (isSubmitted) {
+  if (isSubmitted&& isSuccessfull) {
     return (
       <section id="contact" className="section-padding bg-primary-50 dark:bg-primary-800">
         <div className="container-custom">
