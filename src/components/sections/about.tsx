@@ -71,9 +71,14 @@ export function About() {
 
             {/* Content */}
             <div className="order-1 lg:order-2 space-y-6">
-              <h3 className="text-2xl font-semibold text-primary-900 dark:text-primary-100">
+              {
+                ownerprofile&&(
+                   <h3 className="text-2xl font-semibold text-primary-900 dark:text-primary-100">
                 Hello! I'm {ownerprofile?.firstName+" "+ownerprofile?.firstName}
               </h3>
+                )
+              }
+             
 
               <div className="space-y-4 text-primary-600 dark:text-primary-300 leading-relaxed">
                 <p style={{ whiteSpace: "pre-line" }}>{bio?.biography}</p>
