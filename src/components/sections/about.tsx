@@ -11,8 +11,6 @@ import { Download, ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 export function About() {
-
-
   const { data: profilePicture } = useFetchProfilePicture();
   const { data: ownerprofile, isLoading, error } = useOwnerProfile();
 
@@ -20,23 +18,22 @@ export function About() {
   const { data: resume } = useGetResume();
   const { data: bio } = useGetBiography();
 
-    const downloadResume = () => {
+  const downloadResume = () => {
     const link = document.createElement("a");
-    link.href =`${resume?.resume}`;
+    link.href = `${resume?.resume}`;
     link.download = `${resume?.fileName}`;
     link.click();
   };
 
-//   const downloadPDF = (url: string, fileName: string) => {
-//     console.log(url,fileName)
-//   const link = document.createElement("a");
-//   link.href = url;
-//   link.download = fileName;
-//   document.body.appendChild(link);
-//   link.click();
-//   document.body.removeChild(link);
-// };
-
+  //   const downloadPDF = (url: string, fileName: string) => {
+  //     console.log(url,fileName)
+  //   const link = document.createElement("a");
+  //   link.href = url;
+  //   link.download = fileName;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   return (
     <section
@@ -65,19 +62,17 @@ export function About() {
                     height={320}
                     className="rounded-2xl"
                   />
-                  
                 </div>
-                <div className=" absolute -bottom-4 -right-4 w-24 h-24 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center shadow-lg">
+                <div className="hidden md:flex absolute -bottom-4 -right-4 w-24 h-24 bg-primary-100 dark:bg-primary-800 rounded-full items-center justify-center shadow-lg">
                   <span className="text-2xl">🚀</span>
                 </div>
               </div>
             </div>
 
-
             {/* Content */}
             <div className="order-1 lg:order-2 space-y-6">
               <h3 className="text-2xl font-semibold text-primary-900 dark:text-primary-100">
-                Hello! I'm {ownerprofile?.firstName}
+                Hello! I'm {ownerprofile?.firstName+" "+ownerprofile?.firstName}
               </h3>
 
               <div className="space-y-4 text-primary-600 dark:text-primary-300 leading-relaxed">
@@ -114,18 +109,19 @@ export function About() {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 pt-6">
-                <Button 
-                onClick={downloadResume}
-                // onClick={() => downloadPDF(`${resume?.resume}`, `${resume?.fileName}`)} 
-                
-                className="btn-primary">
+                <Button
+                  onClick={downloadResume}
+                  // onClick={() => downloadPDF(`${resume?.resume}`, `${resume?.fileName}`)}
+
+                  className="btn-primary"
+                >
                   <Download className="w-4 h-4 mr-2" />
                   Download Resume
                 </Button>
-                <Button variant="outline" className="btn-secondary">
+                {/* <Button variant="outline" className="btn-secondary">
                   <ExternalLink className="w-4 h-4 mr-2" />
                   View Portfolio
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
