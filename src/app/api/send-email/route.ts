@@ -6,8 +6,9 @@ import path from "path";
 
 export async function POST(request: Request) {
   try {
-    const { to, subject, template, sender,message } = await request.json();
-
+    const { senderEmail, subject, template, senderName, message } =
+      await request.json();
+    // console.log("sender email:", message);
     // 1. Transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -34,19 +35,43 @@ export async function POST(request: Request) {
         extName: ".hbs",
       })
     );
+    if (!senderEmail) {
+      return NextResponse.json(
+        { success: false, error: "Sender email is required" },
+        { status: 400 }
+      );
+    }
 
     // 4. Send email with template
-       await transporter.sendMail({
+    await transporter.sendMail({
       from: process.env.NEXT_PUBLIC_EMAIL_USER,
-      to,
+      to: senderEmail,
       subject: subject,
       template: template,
-      context: { name:sender, to,message },
+      context: { name: senderName },
     } as SendMailOptions & { template: string; context: any });
 
+    // 4b. Send email with template
+    await transporter.sendMail({
+      from: process.env.NEXT_PUBLIC_EMAIL_USER,
+      to: process.env.NEXT_PUBLIC_EMAIL_USER, // your email address
+      subject: "📩 New Portfolio Message",
+      template: "notification",
+      context: {
+        name: senderName,
+        email: senderEmail,
+        message: message,
+      },
+    } as SendMailOptions & { template: string; context: any });
 
-    return NextResponse.json({ success: true, message: "email sent!" });
+    return NextResponse.json({
+      success: true,
+      message: "email sent!",
+    });
   } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
   }
 }

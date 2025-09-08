@@ -70,17 +70,18 @@ export function Contact() {
     // Simulate form submission
 
     try {
-      
+      // console.log("form email",formData.email)
      const res = await fetch("/api/send-email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        to: formData.email,
+        senderEmail: formData.email,
         subject:"Thank you",
         template: "thankyou",   // this matches welcome.handlebars
         message: formData.message,
-        sender:formData.name
+        senderName:formData.name
       }),
+    
     });
 
     const data = await res.json();
