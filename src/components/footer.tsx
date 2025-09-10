@@ -4,10 +4,10 @@ import { Github, Linkedin, Twitter, Mail } from 'lucide-react'
 import { Button } from './ui/button'
 
 const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/yourusername', icon: Github },
-  { name: 'LinkedIn', href: 'https://linkedin.com/in/yourusername', icon: Linkedin },
-  { name: 'Twitter', href: 'https://twitter.com/yourusername', icon: Twitter },
-  { name: 'Email', href: 'mailto:your.email@example.com', icon: Mail },
+  { name: 'GitHub', href: 'https://github.com/danielnifty1', icon: Github },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/daniel-chigozie', icon: Linkedin },
+  { name: 'Twitter', href: 'https://x.com/danielnifty', icon: Twitter },
+  { name: 'Email', href: 'mailto:danielobichere@gmail.com', icon: Mail },
 ]
 
 export function Footer() {
@@ -17,7 +17,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
           <div className="text-center md:text-left">
             <p className="text-primary-600 dark:text-primary-400">
-              © 2024 Your Name. All rights reserved.
+              © 2025 Obichere Chigozie Daniel. All rights reserved.
             </p>
           </div>
           
