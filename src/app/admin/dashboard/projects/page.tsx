@@ -30,6 +30,7 @@ export default function ProjectsPage() {
     technologies: [] as string[],
     githubUrl: '',
     liveUrl: '',
+    projectType:'',
     isCompleted: true
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -113,6 +114,7 @@ export default function ProjectsPage() {
       technologies: [],
       githubUrl: '',
       liveUrl: '',
+      projectType:'',
       isCompleted: true
     });
     setImageFile(null);
@@ -136,6 +138,7 @@ export default function ProjectsPage() {
       technologies: project.technologies,
       githubUrl: project.githubUrl || '',
       liveUrl: project.liveUrl || '',
+      projectType:project.projectType||'',
       isCompleted: project.isCompleted
     });
     setImageFile(null);
@@ -157,7 +160,9 @@ export default function ProjectsPage() {
       technologies: formData.technologies,
       githubUrl: formData.githubUrl.trim() || undefined,
       liveUrl: formData.liveUrl.trim() || undefined,
-      isCompleted: formData.isCompleted
+      projectType:formData.projectType.trim(),
+      isCompleted: formData.isCompleted,
+       
     };
 
     if (editingProject) {
@@ -285,6 +290,25 @@ export default function ProjectsPage() {
                     >
                       <option value="completed">Completed</option>
                       <option value="todo">To Do</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      Project Type
+                    </label>
+                    <select
+                      value={formData.isCompleted ? 'completed' : 'todo'}
+                      onChange={(e) => handleInputChange('isCompleted', e.target.value === 'completed')}
+                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    >
+                      <option value="web">web</option>
+                      <option value="mobile">mobile</option>
+                      <option value="api">api</option>
+
+                      <option value="tool">tool</option>
+
+                      <option value="full-stack">full-stack</option>
+
                     </select>
                   </div>
                 </div>

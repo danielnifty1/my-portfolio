@@ -51,6 +51,7 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   image?: string;
+  projectType:string;
   isCompleted: boolean;
   createdAt: Timestamp;
   updatedAt: Timestamp;

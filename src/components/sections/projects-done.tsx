@@ -1,11 +1,17 @@
 "use client"
 
-import { completedProjects, type Project } from '@/data/projects'
+// import { completedProjects, type Project } from '@/data/projects'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Github, ExternalLink, Eye } from 'lucide-react'
+import { useProjectsService } from '@/hooks/useOwnerProfile'
+import { useEffect, useState } from 'react'
+import { useQueryClient,useQuery } from '@tanstack/react-query'
+import { Project, projectsService } from '@/lib/firebase-services'
+// const [fetchedProject, setFetchedProject]=useEffect([])
 
-const getCategoryColor = (category: Project['category']) => {
+
+const getCategoryColor = (category: Project['projectType']) => {
   switch (category) {
     case 'web':
       return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
@@ -15,14 +21,33 @@ const getCategoryColor = (category: Project['category']) => {
       return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
     case 'tool':
       return 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200'
-    case 'other':
+    case 'full-stack':
       return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
     default:
       return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200'
   }
 }
 
+
 export function ProjectsDone() {
+  const [showCompleted, setShowCompleted] = useState(true);
+
+    const queryClient = useQueryClient();
+
+  // Fetch projects data with better caching
+  const { data: projects, isLoading, error } =   useQuery({
+    queryKey: ['projects'],
+    queryFn: projectsService.getProjects,
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    gcTime: 5 * 60 * 1000, // 5 minutes
+    retry: 2,
+  });
+  
+    const filteredProjects = projects?.filter(project => 
+    showCompleted ? project.isCompleted : !project.isCompleted
+  ) || [];
+
+  // console.log("filteredProjects",filteredProjects)
   return (
     <section id="projects-done" className="section-padding bg-primary-50 dark:bg-primary-800">
       <div className="container-custom">
@@ -40,16 +65,31 @@ export function ProjectsDone() {
 
           {/* Projects Grid */}
           <div className="grid md:grid-cols-2 gap-8">
-            {completedProjects.map((project) => (
+            {filteredProjects?.map((project) => (
+              
+
               <div key={project.id} className="card group hover:shadow-xl transition-all duration-300">
                 {/* Project Image Placeholder */}
                 <div className="relative mb-6">
-                  <div className="w-full h-48 bg-gradient-to-br from-accent-400 to-accent-600 rounded-lg flex items-center justify-center text-white text-6xl font-bold group-hover:scale-105 transition-transform duration-300">
-                    {project.title.charAt(0)}
-                  </div>
+                  {/* <div className="w-full h-48 bg-gradient-to-br from-accent-400 to-accent-600 rounded-lg flex items-center justify-center text-white text-6xl font-bold group-hover:scale-105 transition-transform duration-300"> */}
+                      {project.image && (
+                      <div className="h-48 bg-gray-200 dark:bg-gray-700 rounded-md">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover rounded-md"
+                        /> 
+                       
+                      </div>
+                    )}
+
+                
                   <div className="absolute top-4 right-4">
-                    <Badge className={getCategoryColor(project.category)}>
-                      {project.category.charAt(0).toUpperCase() + project.category.slice(1)}
+                    <Badge className={getCategoryColor(project.projectType)}>
+                      {/* {project.projectType.charAt(0).toUpperCase() + project.projectType.slice(1)}
+                       */}
+                      {project.projectType}
+
                     </Badge>
                   </div>
                 </div>
@@ -70,7 +110,7 @@ export function ProjectsDone() {
                       Tech Stack
                     </h4>
                     <div className="flex flex-wrap gap-2">
-                      {project.techStack.map((tech) => (
+                      {project.technologies.map((tech) => (
                         <span
                           key={tech}
                           className="px-3 py-1 bg-primary-100 dark:bg-primary-700 text-primary-700 dark:text-primary-300 text-xs font-medium rounded-full"
@@ -101,13 +141,13 @@ export function ProjectsDone() {
                       </Button>
                     )}
                     
-                    {project.demoUrl && (
+                    {project.liveUrl && (
                       <Button
                         // asChild
                         className="flex-1"
                       >
                         <a
-                          href={project.demoUrl}
+                          href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center justify-center"
@@ -138,7 +178,7 @@ export function ProjectsDone() {
                 className="btn-primary"
               >
                 <a
-                  href="https://github.com/yourusername"
+                  href="https://github.com/danielnifty1"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

@@ -1,4 +1,4 @@
-export interface Project {
+export interface Projects {
   id: string
   title: string
   description: string
@@ -11,7 +11,7 @@ export interface Project {
   priority?: 'low' | 'medium' | 'high'
 }
 
-export const completedProjects: Project[] = [
+export const completedProjects: Projects[] = [
   {
     id: '1',
     title: 'E-Commerce Platform',
@@ -58,7 +58,7 @@ export const completedProjects: Project[] = [
   }
 ]
 
-export const plannedProjects: Project[] = [
+export const plannedProjects: Projects[] = [
   {
     id: '5',
     title: 'AI Chat Application',
